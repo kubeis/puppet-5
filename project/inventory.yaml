@@ -1,0 +1,17 @@
+# This is an example inventory.yaml
+# To read more about inventory files, see https://pup.pt/bolt-inventory
+#
+ groups:
+   - name: linux
+     targets:
+       - 164.132.182.36 
+     config:
+       transport: ssh
+       ssh:
+         private-key: ~/.ssh/id_rsa 
+         user: fedora
+   - name: local
+     targets:
+       - localhost
+     config:
+       transport: local

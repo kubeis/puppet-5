@@ -1,0 +1,8 @@
+---
+name: project
+modules: []
+format: rainbow
+plans:
+- project::myplan
+tasks:
+- project::mytask

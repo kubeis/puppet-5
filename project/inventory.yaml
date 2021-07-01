@@ -2,7 +2,7 @@
 # To read more about inventory files, see https://pup.pt/bolt-inventory
 #
  groups:
-   - name: linux
+   - name: remote
      targets:
        - 164.132.182.36 
      config:

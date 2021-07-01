@@ -79,3 +79,8 @@ build-iPhoneSimulator/
 # bolt
 *.log
 .rerun*
+.plan_cache*
+.task_cache*
+Puppetfile
+.modules
+.resource_types

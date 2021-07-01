@@ -1,6 +1,7 @@
 ---
 name: project
-modules: []
+modules:
+- puppetlabs/docker
 format: rainbow
 plans:
 - project::myplan

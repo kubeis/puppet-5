@@ -8,7 +8,7 @@
    sudo apt-get -y install python3 python3-venv # install python3 and virtualenv
    sudo apt-get -y install build-essential   # need for installing docker-compose
    sudo apt-get -y install python3-dev libxml2-dev libxslt-dev libffi-dev # need for installing docker-compose
-   htop  # check your vm config
+   htop # check your vm config
    Crtl-c  # exit 
 ``` 
 
@@ -85,7 +85,7 @@ sudo apt update
 curl -O https://apt.puppet.com/puppet-release-focal.deb
 sudo apt install ./puppet-release-focal.deb 
 sudo apt update
-sudo apt install puppetserver
+sudo apt -y install puppetserver
 apt policy puppetserver
 sudo systemctl start puppetserver
 sudo systemctl enable puppetserver
@@ -93,11 +93,11 @@ systemctl status puppetserver
 # change .profile   vi ~/.profile 
 export PATH=/opt/puppetlabs/bin/:$PATH
 source .profile
-puppet --version 
+puppet --version   # should be version 7.8+
 ```
 # Configure puppet client
 ```shell
-# set a FQND name in /etc/hosts
+# set a FQDN name in /etc/hosts
 sudo apt update
 wget https://apt.puppet.com/puppet7-release-focal.deb
 sudo dpkg -i puppet7-release-focal.deb

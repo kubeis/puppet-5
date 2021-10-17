@@ -1,6 +1,6 @@
 #  Training puppet-5
 
-## Pre-requisites on your VM
+## Pre-requisites on your VM on ubuntu
 ### Useful packages  
 ```shell
    sudo apt-get update  # update links to repos
@@ -103,6 +103,15 @@ wget https://apt.puppet.com/puppet7-release-focal.deb
 sudo dpkg -i puppet7-release-focal.deb
 sudo apt update
 sudo apt-get install puppet-agent
+```
+## Create an agent certificate (go to the agent)
+```shell
+cd /opt/puppetlabs/bin
+./puppet agent --verbose  --test --certname hme
+````
+## Sign 
+
+
 # change the host name in /etc/hosts and this file /etc/puppetlabs/puppet/puppet.conf
 # accordingly
 # in /etc/hosts
@@ -112,7 +121,8 @@ sudo apt-get install puppet-agent
 172.20.14.135 internal.local
 # in /etc/puppetlabs/puppet/puppet.conf
 [main]
-server = ref-master.openstacklocal
+server = puppet
+ca = puppet
 # This file can be used to override the default puppet settings.
 sudo systemctl stop puppet 
 sudo systemctl start puppet

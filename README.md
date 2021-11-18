@@ -37,6 +37,7 @@ wget https://apt.puppet.com/puppet-tools-release-focal.deb
 sudo dpkg -i puppet-tools-release-focal.deb
 sudo apt-get update 
 sudo apt-get install puppet-bolt
+bolt --version 
 ```
 
 ## Install bolt on fedora 32 ( host puppetmaster )
@@ -47,15 +48,14 @@ sudo dnf install puppet-bolt
 
 ## Copy this repo 
 ```shell
-git clone  https://github.com/<votre_repo>/puppet-5.git
+git clone  https://github.com/kubeis/puppet-5.git
 ```
 
 ## Create a bolt project
 ```shell
 cd puppet-5 
-mkdir project
 cd project 
-bolt project init
+#bolt project init
 ```
 
 ## Inventory example
@@ -69,7 +69,7 @@ Open inventory yaml file
        transport: ssh
        ssh:
          private-key: ~/.ssh/id_rsa
-         user: fedora
+         user: ubuntu
    - name: local
      targets: 
        - localhost
@@ -81,6 +81,7 @@ bolt command run whoami -t all
 
 # Configure puppet master 
 ```shell
+cd
 sudo apt update
 curl -O https://apt.puppet.com/puppet-release-focal.deb
 sudo apt install ./puppet-release-focal.deb 
@@ -93,7 +94,7 @@ systemctl status puppetserver
 # change .profile   vi ~/.profile 
 export PATH=/opt/puppetlabs/bin/:$PATH
 source .profile
-puppet --version   # should be version 7.8+
+puppet --version   # should be version 7.12+
 ```
 # Configure puppet client
 ```shell
@@ -104,40 +105,43 @@ sudo dpkg -i puppet7-release-focal.deb
 sudo apt update
 sudo apt-get install puppet-agent
 ```
-## Create an agent certificate (go to the agent)
-```shell
-cd /opt/puppetlabs/bin
-./puppet agent --verbose  --test --certname hme
-````
-## Sign 
-
-
 # change the host name in /etc/hosts and this file /etc/puppetlabs/puppet/puppet.conf
 # accordingly
 # in /etc/hosts
+```shell
 127.0.0.1 localhost
-137.74.85.233 ref-node1 ref-node1 external.local
-137.74.107.159  ref-master.openstacklocal
+137.74.85.233 ref-node1 ref-node1 external.local node1
+137.74.107.159  puppetmaster
 172.20.14.135 internal.local
-# in /etc/puppetlabs/puppet/puppet.conf
+
+# in sudo vi /etc/puppetlabs/puppet/puppet.conf
 [main]
 server = puppet
 ca = puppet
 # This file can be used to override the default puppet settings.
-sudo systemctl stop puppet 
+sudo systemctl stop puppet
 sudo systemctl start puppet
-sudo systemctl status puppet  
-# No error should be displayed 
+sudo systemctl status puppet
+```
+## Create an agent certificate (go to the agent)
+```shell
+# change .profile   vi ~/.profile 
+export PATH=/opt/puppetlabs/bin/:$PATH
+source .profile
+puppet --version   # should be version 7.12+
+puppet agent --verbose  --test --certname hme
+```
+# Manage run interval 
+```shell
 sudo -i
 puppet ssl bootstrap
 puppet config print | grep runinterval
 puppet config set --section main runinterval 30
 sudo systemctl stop puppet 
 sudo systemctl start puppet
-sudo systemctl status puppet 
-
-
+sudo systemctl status puppet
 ```
+
 ## Sign the certificate on the master 
 ```shell
 sudo /opt/puppetlabs/server/bin/puppetserver ca list
@@ -150,3 +154,23 @@ file { '/tmp/hello.txt' :
        content => "hello, world\n",
 }
 ```
+## Facts
+Hit the command ```facter``` on the puppetmaster and puppet node 
+```shell
+facter ipaddress
+facter interfaces
+facter operatingsystem
+facter os
+facter os.release.major
+```
+
+
+## install docker on remote
+run this command on the puppetmaster  
+```shell
+ puppet module  install puppetlabs-docker --version 4.1.2
+```
+
+
+sudo rpm -Uvh https://yum.puppet.com/puppet7-release-el-8.noarch.rpm
+sudo yum install puppet-agent

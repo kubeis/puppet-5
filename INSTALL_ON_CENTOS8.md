@@ -2,8 +2,8 @@
 
 ## Install repo package 
 ```shell
-sudo yum update
-sudo yum install https://yum.puppet.com/puppet-release-el-8.noarch.rpm
+sudo yum -y update # update all packages
+sudo yum -y install https://yum.puppet.com/puppet-release-el-8.noarch.rpm # install puppet repo package
 sudo yum list --disablerepo=* --enablerepo=puppet available  
 ```
 
@@ -18,8 +18,8 @@ exit ; sudo -i puppet --version
 ## Time synchronize 
 ```shell
 sudo -s
-puppet apply -e 'package { "chrony": ensure => installed } ' # is the package chrony installed ?  
-puppet apply -e 'service { "chronyd": ensure => running, enable => true } ' # start the time service 
+puppet apply -e 'package { "chrony": ensure => installed }' # is the package chrony installed ?  
+puppet apply -e 'service { "chronyd": ensure => running, enable => true }' # start the time service 
 ```
 
 ## Change puppetserver java memory settings
@@ -34,9 +34,9 @@ puppet agent -t  # test
 ```shell
 puppet module install puppetlabs/apache
 puppet apply -e "include apache"
-ss -ntl
-ss -ntlp 
-curl https:<vm_ip>
+ss -ntl  # see ports in used 
+ss -ntlp # see processes in used 
+curl https:<vm_ip> # check
 ```
 
 ## Set up 
@@ -46,17 +46,38 @@ yum repolist
 yum list puppet
 ```
 
-## Environment 
+## Environment and manifest 
 ```shell
 puppet config print 
+puppet config print config
+puppet config print manifest --section master --environment production
+# puppet apply -e or puppet agent -t 
+vi /etc/puppetlabs/code/environments/production/manifests/site.pp
+```
+add code   
+```puppet
+notify { 'Hello world':
+  message => "Hello world",
+}
+puppet apply /etc/puppetlabs/code/environments/production/manifests/site.pp
+puppet agent -t
+```
+Set up a custom environment  
+```shell
 mkdir -p /etc/puppetlabs/code/environments/dev/manifests 
 puppet config set environment dev --section=agent
 ```
 
-## Resources
+## Bash Aliases
+```shell
+alias cdpp='cd $(puppet config print manifest)'
+alias
+```
+
+
+## Resources (notify, package, service)
 ```shell
 puppet resource --type
 puppet describe service
 puppet resource service chronyd 
-
 ```

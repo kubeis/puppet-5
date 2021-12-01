@@ -15,6 +15,18 @@ yum -y install puppetserver  # install puppetserver and agent as well
 exit ; sudo -i puppet --version 
 ```
 
+## Generate a CA 
+```shell
+puppetserver ca list -a # list all current certificats
+puppet agent --test --noop --certname puppet # no op or dry-run
+puppetserver ca list -a  # check 
+puppetserver ca sign --certname puppet  # sign a named certificat
+
+```
+
+
+
+
 ## Time synchronize 
 ```shell
 sudo -s

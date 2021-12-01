@@ -26,3 +26,17 @@ puppet config set environments dev --section=agent
 ```
 
 ## Alias 
+
+
+
+## Scripts 
+
+### check memory 
+```shell
+facter
+facter >text
+vi text
+# Change this script accordingly
+puppet apply check_memory.pp
+```
+

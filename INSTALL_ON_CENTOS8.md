@@ -15,17 +15,52 @@ yum -y install puppetserver  # install puppetserver and agent as well
 exit ; sudo -i puppet --version 
 ```
 
-## Generate a CA 
+## Generate a CA on server  
 ```shell
 puppetserver ca list -a # list all current certificats
 puppet agent --test --noop --certname puppet # no op or dry-run
 puppetserver ca list -a  # check 
 puppetserver ca sign --certname puppet  # sign a named certificat
-
+```
+## Add a node
+```shell
+sudo -s
+yum -y update # update all packages
+yum -y install https://yum.puppet.com/puppet-release-el-8.noarch.rpm # install puppet repo package
+yum list --disablerepo=* --enablerepo=puppet available
+yum -y update # update all packages
+yum -y install puppet-agent 
+vi /etc/hosts
+# added bidirectionnel connection
+cd /etc/puppetlabs/puppet/
+vi puppet.conf 
+systemctl stop puppet
+systemctl start puppet
+systemctl status puppet
+puppet agent -v --test --certname hme
+# change this line in ~/.bash_profile
+export PATH=/opt/puppetlabs/bin/:$PATH
+vi ~/.bash_profile 
+source ~/.bash_profile 
+puppet agent -v --test --certname hme
+systemctl status puppet
 ```
 
-
-
+## Sign certificat on master
+```shell
+sudo puppet agent --test --noop --certname puppet
+puppet agent --test --noop --certname puppet
+puppetserver ca list -a
+puppetserver ca sign --certname puppet
+puppetserver ca list -a
+vi /etc/hosts
+ping dashboard
+puppetserver ca sign --certname hme
+puppetserver ca list -a
+cd  /etc/puppetlabs/code/environments/production/manifests/
+vi site.pp
+puppetserver ca sign --certname  puppet-dashboard.novalocal
+```
 
 ## Time synchronize 
 ```shell
@@ -44,7 +79,7 @@ puppet agent -t  # test
 
 ## First usage
 ```shell
-puppet module install puppetlabs/apache
+:
 puppet apply -e "include apache"
 ss -ntl  # see ports in used 
 ss -ntlp # see processes in used 

@@ -12,7 +12,7 @@
    Crtl-c  # exit 
 ``` 
 
-## Set correct timezone
+### Set correct timezone
 ```shell
 sudo timedatectl set-timezone Europe/Paris
 date
@@ -21,7 +21,7 @@ sudo systemctl restart rsyslog
 sudo systemctl status rsyslog
 ```
 
-## Set /etc/hosts on both master and node 
+### Set /etc/hosts on both master and node 
 ```
 sudo vi /etc/hosts
 137.74.107.159   ref-master
@@ -31,7 +31,7 @@ ping -c3 node1
 
 ```
 
-## Install bolt on ubuntu  (host puppetmaster)  
+### Install bolt on ubuntu  (host puppetmaster)  
 ```shell
 wget https://apt.puppet.com/puppet-tools-release-focal.deb
 sudo dpkg -i puppet-tools-release-focal.deb
@@ -40,25 +40,25 @@ sudo apt-get install puppet-bolt
 bolt --version 
 ```
 
-## Install bolt on fedora 32 ( host puppetmaster )
+### Install bolt on fedora 32 ( host puppetmaster )
 ```shell
 sudo rpm -Uvh https://yum.puppet.com/puppet-tools-release-fedora-33.noarch.rpm
 sudo dnf install puppet-bolt
 ```
 
-## Copy this repo 
+### Copy this repo 
 ```shell
 git clone  https://github.com/kubeis/puppet-5.git
 ```
 
-## Create a bolt project
+### Create a bolt project
 ```shell
 cd puppet-5 
 cd project 
 #bolt project init
 ```
 
-## Inventory example
+### Inventory example
 Open inventory yaml file
 ```yaml
  groups:
@@ -79,7 +79,7 @@ Open inventory yaml file
 bolt command run whoami -t all
 ```
 
-# Configure puppet master 
+### Configure puppet master 
 ```shell
 cd
 sudo apt update
@@ -96,7 +96,7 @@ export PATH=/opt/puppetlabs/bin/:$PATH
 source .profile
 puppet --version   # should be version 7.12+
 ```
-# Configure puppet client
+### Configure puppet client
 ```shell
 # set a FQDN name in /etc/hosts
 sudo apt update
@@ -105,9 +105,7 @@ sudo dpkg -i puppet7-release-focal.deb
 sudo apt update
 sudo apt-get install puppet-agent
 ```
-# change the host name in /etc/hosts and this file /etc/puppetlabs/puppet/puppet.conf
-# accordingly
-# in /etc/hosts
+###change the host name in /etc/hosts and this file /etc/puppetlabs/puppet/puppet.conf accordingly in /etc/hosts
 ```shell
 127.0.0.1 localhost
 137.74.85.233 ref-node1 ref-node1 external.local node1
@@ -131,7 +129,7 @@ source .profile
 puppet --version   # should be version 7.12+
 puppet agent --verbose  --test --certname hme
 ```
-# Manage run interval 
+### Manage run interval 
 ```shell
 sudo -i
 puppet ssl bootstrap

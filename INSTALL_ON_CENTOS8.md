@@ -12,7 +12,7 @@ sudo yum list --disablerepo=* --enablerepo=puppet available
 sudo -s
 echo "127.0.0.2 puppet" >> /etc/hosts
 yum -y install puppetserver  # install puppetserver and agent as well
-exit ; sudo -i puppet --version 
+puppet --version 
 ```
 
 ## Generate a CA on server  
@@ -79,7 +79,7 @@ puppet agent -t  # test
 
 ## First usage
 ```shell
-:
+puppet module install puppetlabs-apache --version 7.0.0
 puppet apply -e "include apache"
 ss -ntl  # see ports in used 
 ss -ntlp # see processes in used 

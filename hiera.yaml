@@ -1,0 +1,8 @@
+---
+:backends:
+  - yaml
+
+:hierarchy:
+  - "hosts/%{hostname}"
+  - "arch/%{architecture}"
+  - common

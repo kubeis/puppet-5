@@ -1,4 +1,4 @@
 file { 'hello':
-  path => '/home/ubuntu/hello.txt',
+  path => '/home/centos/hello.txt',
   content => 'Hello World\n',
 }

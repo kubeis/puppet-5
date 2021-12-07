@@ -1,5 +1,11 @@
 # Manifests 
 
+# Commandes
+```shell
+puppet config print  # list  puppet config variables
+puppet config print config  # get the directory
+puppet config print manifest --section master --environment production /
+
 ## Premiers scripts
 ```shell
 puppet config set environment production --section=agent
@@ -26,8 +32,19 @@ puppet config set environments dev --section=agent
 ```
 
 ## Alias 
+```shell
+alias cdpp='cd $(puppet config print manifest)'
+alias 
+vi ~/.bashrc
+```
 
-
+## Resources 
+```shell
+puppet resource --type
+puppet describe service
+puppet resource service chronyd
+puppet resource service atd
+```
 
 ## Scripts 
 

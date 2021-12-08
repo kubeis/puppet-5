@@ -1,0 +1,10 @@
+---
+version: 5
+defaults:
+  #
+hierarchy:
+  - name: "per-node data (yaml version)"
+    path: "nodes/%{::trusted.certname}.yaml"
+  - name: "Other Yaml "
+    paths:
+      - "common.yaml"

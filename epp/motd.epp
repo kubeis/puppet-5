@@ -1,0 +1,2 @@
+This is the system:
+<%= $facts['ipaddress'] %> <%= $facts['fqdn'] %>

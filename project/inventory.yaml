@@ -4,12 +4,12 @@
  groups:
    - name: remote
      targets:
-       - 164.132.182.36 
+       - 51.255.211.183
      config:
        transport: ssh
        ssh:
          private-key: ~/.ssh/id_rsa 
-         user: fedora
+         user: centos
    - name: local
      targets:
        - localhost

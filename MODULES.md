@@ -21,6 +21,7 @@ puppet apply file_line.pp
 ## Create a module
 ```shell
 cd /etc/puppetlabs/code/environments/production/modules
+mkdir modules
 mkdir -p chrony/{manifests,files,examples}
 tree chrony
 ```
@@ -49,6 +50,8 @@ class chrony {
 # run this line outside, clean the config file
 grep -vE '^(#|$)' /etc/chrony.conf \
 > /etc/puppetlabs/code/environments/production/modules/chrony/files/chrony.conf
+
+
 puppet agent -t
 rm /etc/chrony.conf
 puppet agent -t

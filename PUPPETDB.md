@@ -6,7 +6,7 @@ sudo -s
 dnf update
 dnf module list postgresql
 dnf module -y enable postgresql:13
-dnf install -y  postgresql-server
+dnf install -y  postgresql-server, postgresql-contrib
 postgresql-setup --initdb
 systemctl start postgresql
 systemctl enable postgresql
@@ -30,7 +30,7 @@ host   puppetdb         puppetdb       ::1/128                  md5
 # Check
 exit
 systemctl restart postgresql
-sudo -iu 
+sudo -iu postgres
 psql -h localhost puppetdb puppetdb
 # password
 \q 
@@ -42,7 +42,7 @@ psql -h localhost puppetdb puppetdb
 sudo yum -y update # update all packages
 sudo yum -y install https://yum.puppet.com/puppet-release-el-8.noarch.rpm # install puppet repo package
 sudo yum list --disablerepo=* --enablerepo=puppet available # check 
-yum -y install puppet-agent puppetdb # install puppetdb
+yum -y install  puppetdb # install puppetdb
 puppetdb ssl-setup  # generate ssl certificats
 ```
 
